@@ -1,0 +1,22 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="runData" type="Application" factoryName="Application" singleton="false">
+    <envs>
+      <env name="MOD_CLASSES" value="ervin_modja%%$PROJECT_DIR$/../ervin_modja\build\resources\main;ervin_modja%%$PROJECT_DIR$/../ervin_modja\build\classes\java\main" />
+      <env name="MCP_MAPPINGS" value="official_1.16.1" />
+      <env name="MCP_VERSION" value="20200625.160719" />
+      <env name="FORGE_VERSION" value="32.0.51" />
+      <env name="FORGE_GROUP" value="net.minecraftforge" />
+      <env name="target" value="fmluserdevdata" />
+      <env name="MC_VERSION" value="1.16.1" />
+    </envs>
+    <option name="MAIN_CLASS_NAME" value="net.minecraftforge.userdev.LaunchTesting" />
+    <module name="ervin_modja.main" />
+    <option name="PROGRAM_PARAMETERS" value="--mod ervin_modja --all --output C:\save\ervin\projects\ervin_modja\src\generated\resources --existing C:\save\ervin\projects\ervin_modja\src\main\resources" />
+    <option name="VM_PARAMETERS" value="-Dforge.logging.console.level=debug -Dforge.logging.markers=REGISTRIES" />
+    <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/run-data" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+      <option name="Gradle.BeforeRunTask" enabled="true" tasks=":prepareRunDataCompile" externalProjectPath="$PROJECT_DIR$" />
+    </method>
+  </configuration>
+</component>
