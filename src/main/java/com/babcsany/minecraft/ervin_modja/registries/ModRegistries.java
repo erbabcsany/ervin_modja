@@ -23,5 +23,7 @@ public class ModRegistries {
         System.out.println(ModRegistries.class);
         BLOCKS.register(modEventBus);
         ITEMS.register(modEventBus);
+        BlockInit.register();
+        ItemInit.register();
     }
 }
