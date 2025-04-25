@@ -17,6 +17,8 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 // The value here should match an entry in the META-INF/mods.toml file
@@ -30,15 +32,15 @@ public class ErvinModja {
     public ErvinModja() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
-        // Register the mod objects for modloading
+        // Register the mod objects for mod-loading
         ModRegistries.register(modEventBus);
-        // Register the setup method for modloading
+        // Register the setup method for mod-loading
         modEventBus.addListener(this::setup);
-        // Register the enqueueIMC method for modloading
+        // Register the enqueueIMC method for mod-loading
         modEventBus.addListener(this::enqueueIMC);
-        // Register the processIMC method for modloading
+        // Register the processIMC method for mod-loading
         modEventBus.addListener(this::processIMC);
-        // Register the doClientStuff method for modloading
+        // Register the doClientStuff method for mod-loading
         modEventBus.addListener(this::doClientStuff);
 
         // Register ourselves for server and other game events we are interested in
@@ -46,21 +48,19 @@ public class ErvinModja {
     }
 
     private void setup(final FMLCommonSetupEvent event) {
-        // some preinit code
-        LOGGER.info("HELLO FROM PREINIT");
-//        LOGGER.info("DIRT BLOCK >> {}", Blocks.field_150346_d.getRegistryName());
+        // some pre-init code
+        LOGGER.info("HELLO FROM PRE-INIT");
         LOGGER.info("DIRT BLOCK >> {}", Blocks.DIRT.getDescriptionId());
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {
         // do something that can only be done on the client
-//        LOGGER.info("Got game settings {}", event.getMinecraftSupplier().get().field_71474_y);
         LOGGER.info("Got game settings {}", Minecraft.getInstance().getUser().getName());
     }
 
     private void enqueueIMC(final InterModEnqueueEvent event) {
         // some example code to dispatch IMC to another mod
-        InterModComms.sendTo(MOD_ID, "helloworld", () -> {
+        InterModComms.sendTo(MOD_ID, "hello-world", () -> {
             LOGGER.info("Hello world from the MDK");
             return "Hello world";
         });
@@ -68,9 +68,27 @@ public class ErvinModja {
 
     private void processIMC(final InterModProcessEvent event) {
         // some example code to receive and process InterModComms from other mods
-        LOGGER.info("Got IMC {}", event.getIMCStream().
-                map(m -> m.getMessageSupplier().get()).
-                collect(Collectors.toList()));
+        try {
+            List<Object> messages = event.getIMCStream()
+                    .map(m -> {
+                        try {
+                            return Optional.ofNullable(m.messageSupplier().get());
+                        } catch (Exception e) {
+//                            LOGGER.error("Hiba az IMC üzenet feldolgozása során", e);
+                            LOGGER.error("Error processing IMC message", e);
+                            return Optional.empty();
+                        }
+                    })
+                    .filter(Optional::isPresent)
+                    .map(Optional::get)
+                    .collect(Collectors.toList());
+
+//            LOGGER.info("IMC üzenetek: {}", messages);
+            LOGGER.info("Got IMC {}", messages);
+        } catch (Exception e) {
+//            LOGGER.error("Hiba az IMC stream feldolgozása során", e);
+            LOGGER.error("Error processing IMC stream", e);
+        }
     }
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call

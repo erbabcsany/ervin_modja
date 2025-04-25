@@ -18,7 +18,6 @@ import java.util.Map;
 public class ItemInit {
     private static final Map<ResourceKey<CreativeModeTab>, RegistryObject<Item>> CREATIVE_MODE_TAB_ITEMS = Maps.newHashMap();
 
-//    public static final RegistryObject<Item> CHARCOAL_BLOCK = ModRegistries.ITEMS.register("charcoal_block", () -> new CanBurningBlockItem(BlockInit.CHARCOAL_BLOCK.orElse(Blocks.field_150402_ci), new Item.Properties().func_200916_a(ItemGroup.field_78030_b), 16000));
     public static final RegistryObject<Item> CHARCOAL_BLOCK = ModRegistries.ITEMS.register("charcoal_block", () -> new CanBurningBlockItem(BlockInit.CHARCOAL_BLOCK.orElse(Blocks.COAL_BLOCK), new Item.Properties(), 16000));
 
     public static void register(IEventBus modEventBus, Logger logger) {
@@ -30,12 +29,12 @@ public class ItemInit {
     // Add example items to some creative mode tabs
     private static void addCreative(BuildCreativeModeTabContentsEvent event) {
         for (Map.Entry<ResourceKey<CreativeModeTab>, RegistryObject<Item>> entry : CREATIVE_MODE_TAB_ITEMS.entrySet()) {
-            addItemToCreativeTab(event, entry.getKey(), entry.getValue().orElse(null));
+            addItemToCreativeTab(event, entry.getKey(), entry.getValue());
         }
     }
 
     // Add the example item to the creative mode tab
-    private static void addItemToCreativeTab(BuildCreativeModeTabContentsEvent event, ResourceKey<CreativeModeTab> tab, Item item) {
+    private static void addItemToCreativeTab(BuildCreativeModeTabContentsEvent event, ResourceKey<CreativeModeTab> tab, RegistryObject<Item> item) {
         if (event.getTabKey() == tab) {
             event.accept(item);
         }
