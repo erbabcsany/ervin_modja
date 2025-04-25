@@ -74,7 +74,6 @@ public class ErvinModja {
                         try {
                             return Optional.ofNullable(m.messageSupplier().get());
                         } catch (Exception e) {
-//                            LOGGER.error("Hiba az IMC üzenet feldolgozása során", e);
                             LOGGER.error("Error processing IMC message", e);
                             return Optional.empty();
                         }
@@ -83,10 +82,8 @@ public class ErvinModja {
                     .map(Optional::get)
                     .collect(Collectors.toList());
 
-//            LOGGER.info("IMC üzenetek: {}", messages);
             LOGGER.info("Got IMC {}", messages);
         } catch (Exception e) {
-//            LOGGER.error("Hiba az IMC stream feldolgozása során", e);
             LOGGER.error("Error processing IMC stream", e);
         }
     }
