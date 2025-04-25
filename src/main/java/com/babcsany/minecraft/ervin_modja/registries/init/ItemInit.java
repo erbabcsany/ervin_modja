@@ -20,6 +20,8 @@ public class ItemInit {
 
     public static final RegistryObject<Item> CHARCOAL_BLOCK = ModRegistries.ITEMS.register("charcoal_block", () -> new CanBurningBlockItem(BlockInit.CHARCOAL_BLOCK.orElse(Blocks.COAL_BLOCK), new Item.Properties(), 16000));
 
+    ItemInit() {}
+
     public static void register(IEventBus modEventBus, Logger logger) {
         CREATIVE_MODE_TAB_ITEMS.put(CreativeModeTabs.BUILDING_BLOCKS, CHARCOAL_BLOCK);
         modEventBus.addListener(ItemInit::addCreative);

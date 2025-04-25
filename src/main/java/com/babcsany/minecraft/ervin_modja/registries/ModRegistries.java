@@ -14,6 +14,8 @@ public class ModRegistries {
     public static final DeferredRegister<Block> BLOCKS = create(ForgeRegistries.BLOCKS);
     public static final DeferredRegister<Item> ITEMS = create(ForgeRegistries.ITEMS);
 
+    ModRegistries() {}
+
     private static <B> DeferredRegister<B> create(IForgeRegistry<B> reg) {
         return DeferredRegister.create(reg, ErvinModja.MOD_ID);
     }
