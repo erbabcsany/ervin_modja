@@ -13,6 +13,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.*;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -31,8 +32,8 @@ public class ErvinModja {
     public static final Logger LOGGER = LogManager.getLogger();
     public static final String MOD_ID = "ervin_modja";
 
-    public ErvinModja(/*FMLJavaModLoadingContext context*/) {
-        IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+    public ErvinModja(FMLJavaModLoadingContext context) {
+        IEventBus modEventBus = context.getModEventBus();
 
         // Register the mod objects for mod-loading
         ModRegistries.register(modEventBus);
@@ -53,20 +54,9 @@ public class ErvinModja {
     }
 
     private void setup(final FMLCommonSetupEvent event) {
-//        // Some common setup code
-//        LOGGER.info("HELLO FROM COMMON SETUP");
         // some pre-init code
         LOGGER.info("HELLO FROM PRE-INIT");
-        LOGGER.info("DIRT BLOCK >> {}", Blocks.DIRT.getDescriptionId());
-
-//        LOGGER.info("DIRT BLOCK >> {}", ForgeRegistries.BLOCKS.getKey(Blocks.DIRT));
-//
-//        if (Config.logDirtBlock)
-//            LOGGER.info("DIRT BLOCK >> {}", ForgeRegistries.BLOCKS.getKey(Blocks.DIRT));
-//
-//        LOGGER.info("{}{}", Config.magicNumberIntroduction, Config.magicNumber);
-//
-//        Config.items.forEach((item) -> LOGGER.info("ITEM >> {}", item.toString()));
+        LOGGER.info("DIRT BLOCK >> {}", ForgeRegistries.BLOCKS.getKey(Blocks.DIRT));
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {
@@ -114,6 +104,8 @@ public class ErvinModja {
     // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
     @Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public static class ClientModEvents {
+
+        ClientModEvents() {}
 
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event)
